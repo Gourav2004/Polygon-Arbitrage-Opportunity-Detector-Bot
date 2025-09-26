@@ -114,6 +114,6 @@ DATABASE_PATH=arb_data.db
   **$env:RUST_LOG="info"; cargo run --release**
 
 **Example Output**
-[2025-09-25T15:24:10Z INFO  polygon_arb_bot] Starting polygon-arb-bot with poll_interval=15s, min_profit=0.5 USDC
-[2025-09-25T15:24:14Z INFO  polygon_arb_bot] Prices: A = 3934.9633 | B = 3982.0518
-[2025-09-25T15:24:14Z INFO  polygon_arb_bot]  Arbitrage opportunity! BUY on A at 3934.9633, SELL on B at 3982.0518 
+[2025-09-26T12:23:48Z INFO  polygon_arb_bot] Starting polygon-arb-bot with poll_interval=15s, min_profit=0.5 USDC
+[2025-09-26T12:23:50Z INFO  polygon_arb_bot] Prices: A = 3823.3225 | B = 3868.7322
+[2025-09-26T12:23:50Z INFO  polygon_arb_bot]  Arbitrage opportunity! BUY on A at 3823.3225, SELL on B at 3868.7322 → Profit: 45.2097 USDC
