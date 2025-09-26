@@ -27,13 +27,7 @@ A Rust-based bot that tracks arbitrage opportunities between two decentralized e
 
 ## Project Structure
 
-Polygon-Arbitrage-Opportunity-Detector-Bot/
-│── src/
-│ └── main.rs # Core bot logic
-│── .env # Environment configuration
-│── Cargo.toml # Dependencies & build config
-│── arb_data.db # SQLite database (auto-created)
-│── README.md # Project documentation
+<pre> ```plaintext polygon-arb-bot/ │── src/ │ └── main.rs # Core bot logic │── .env # Environment configuration │── Cargo.toml # Dependencies & build config │── arb_data.db # SQLite database (auto-created) │── README.md # Project documentation ``` </pre>
 
 ---
 
@@ -117,3 +111,4 @@ DATABASE_PATH=arb_data.db
 [2025-09-26T12:23:48Z INFO  polygon_arb_bot] Starting polygon-arb-bot with poll_interval=15s, min_profit=0.5 USDC
 [2025-09-26T12:23:50Z INFO  polygon_arb_bot] Prices: A = 3823.3225 | B = 3868.7322
 [2025-09-26T12:23:50Z INFO  polygon_arb_bot]  Arbitrage opportunity! BUY on A at 3823.3225, SELL on B at 3868.7322 → Profit: 45.2097 USDC
+
