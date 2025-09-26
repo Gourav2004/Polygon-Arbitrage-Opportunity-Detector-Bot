@@ -28,7 +28,7 @@ A Rust-based bot that tracks arbitrage opportunities between two decentralized e
 ## Project Structure
 
 ```plaintext
-polygon-arb-bot/
+Polygon Arbitrage Opportunity Detector Bot/
 │── src/
 │   └── main.rs    # Core bot logic
 │── .env           # Environment configuration
@@ -94,13 +94,21 @@ Create a .env file in the project root:
 
 RPC_URL=https://polygon-mainnet.infura.io/v3/YOUR_KEY
 DEX_A_ROUTER=0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506   # SushiSwap
+
 DEX_B_ROUTER=0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff   # QuickSwap
+
 TOKEN_IN=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619       # WETH
+
 TOKEN_OUT=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174      # USDC
+
 TRADE_SIZE_WEI=1000000000000000000   # 1 WETH
+
 MIN_PROFIT_USDC=0.5
+
 POLL_INTERVAL_SECS=15
+
 SIMULATED_GAS_USDC=0.2
+
 DATABASE_PATH=arb_data.db
 
 
@@ -119,5 +127,6 @@ DATABASE_PATH=arb_data.db
 [2025-09-26T12:23:48Z INFO  polygon_arb_bot] Starting polygon-arb-bot with poll_interval=15s, min_profit=0.5 USDC
 [2025-09-26T12:23:50Z INFO  polygon_arb_bot] Prices: A = 3823.3225 | B = 3868.7322
 [2025-09-26T12:23:50Z INFO  polygon_arb_bot]  Arbitrage opportunity! BUY on A at 3823.3225, SELL on B at 3868.7322 → Profit: 45.2097 USDC
+
 
 
