@@ -93,6 +93,7 @@ Cargo crates (listed in Cargo.toml, installed automatically during build).
 Create a .env file in the project root:
 
 RPC_URL=https://polygon-mainnet.infura.io/v3/YOUR_KEY
+
 DEX_A_ROUTER=0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506   # SushiSwap
 
 DEX_B_ROUTER=0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff   # QuickSwap
@@ -129,6 +130,7 @@ DATABASE_PATH=arb_data.db
 [2025-09-26T12:23:50Z INFO  polygon_arb_bot] Prices: A = 3823.3225 | B = 3868.7322
 
 [2025-09-26T12:23:50Z INFO  polygon_arb_bot]  Arbitrage opportunity! BUY on A at 3823.3225, SELL on B at 3868.7322 → Profit: 45.2097 USDC
+
 
 
 
