@@ -101,11 +101,17 @@ flowchart TD
 
 ## Setup Instructions
 
-## 1. Clone the repository
+## 1. Installation
 
-git clone https://github.com/Gourav2004/Polygon-Arbitrage-Opportunity-Detector-Bot.git
+Rust (version 1.70+ recommended)
+Install via rustup:
 
-cd polygon-arb-bot
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+
+SQLite (used internally via rusqlite; usually no separate install needed)
+
+Cargo crates (listed in Cargo.toml, installed automatically during build).
 
 
 ## 2. Create .env file
@@ -157,6 +163,7 @@ cargo run --release
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
