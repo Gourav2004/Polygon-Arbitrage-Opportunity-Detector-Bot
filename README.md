@@ -85,15 +85,17 @@ flowchart TD
 
  **Explanation**
 
-- Connect to Polygon RPC.
+- Loads config, logger, and database on startup.
 
-- Fetch current token prices from DEX A and DEX B.
+- Connects to Polygon blockchain via RPC.
 
-- Compare the prices to check for profitable arbitrage.
+- Uses DEX routers to get token prices.
 
-- If profit exceeds threshold → simulate gas → log to SQLite database → output console logs.
+- Caches token decimals to reduce RPC calls.
 
-- If not → skip and wait for the next polling cycle.
+- Runs an arbitrage loop to compare prices and find profit.
+
+- Logs results and saves profitable trades in the database.
 
 ---
 
@@ -159,20 +161,3 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
