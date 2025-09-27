@@ -46,41 +46,23 @@ Polygon Arbitrage Opportunity Detector Bot/
 
 ```mermaid
 flowchart TD
-    %% External Connections
-    A[User / Hiring Team] -->|Configure & Run| B[Polygon-Arb-Bot Application]
-    B --> C[Polygon RPC Provider]
+    A[Polygon RPC Provider] --> B[DEX A Router]
+    A --> C[DEX B Router]
 
-    %% DEX Routers
-    C --> D[DEX A Router (SushiSwap)]
-    C --> E[DEX B Router (QuickSwap)]
+    B --> D[Fetch Price for TOKEN_IN→TOKEN_OUT]
+    C --> E[Fetch Price for TOKEN_IN→TOKEN_OUT]
 
-    %% Fetch Prices
-    D --> F[Fetch TOKEN_IN → TOKEN_OUT Prices from DEX A]
-    E --> G[Fetch TOKEN_IN → TOKEN_OUT Prices from DEX B]
+    D --> F[Compare Prices]
+    E --> F
 
-    %% Core Logic
-    F --> H[Compare Prices for Arbitrage]
-    G --> H
-    H --> I{Is Profit > Threshold?}
+    F --> G{Profit > Threshold?}
+    G -- Yes --> H[Simulate Gas Costs]
+    H --> I[Log to SQLite Database]
+    G -- No --> J[Skip / Wait Next Cycle]
 
-    %% If Yes
-    I -- Yes --> J[Simulate Gas Costs]
-    J --> K[Calculate Net Profit]
-    K --> L[Log Profitable Trade to SQLite Database]
-    L --> M[Output Trade Info to Console]
-
-    %% If No
-    I -- No --> N[Skip Cycle & Wait POLL_INTERVAL_SECS]
-
-    %% Utilities
-    B --> O[Config Loader (.env)]
-    B --> P[Decimals Cache for Tokens]
-    B --> Q[Error Logger (env_logger)]
-
-    %% Database
-    L --> R[SQLite Database: opportunities table]
-                                                                                       
+    I --> K[Output to Console Logs]                                                                                               
 ```
+
 
  **Explanation**
 
@@ -158,6 +140,7 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
