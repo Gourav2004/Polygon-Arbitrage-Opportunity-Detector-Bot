@@ -99,21 +99,16 @@ flowchart TD
 
 ---
 
-## Setup & Installation
+## Setup Instructions
 
-## 1. Add Dependencies
+## 1. Clone the repository
 
-Rust (version 1.70+ recommended)
-Install via rustup:
+git clone https://github.com/your-username/polygon-arb-bot.git
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cd polygon-arb-bot
 
 
-SQLite (used internally via rusqlite; usually no separate install needed)
-
-Cargo crates (listed in Cargo.toml, installed automatically during build).
-
-## 2. Configure .env
+## 2. Create .env file
 
 Create a .env file in the project root:
 
@@ -144,16 +139,16 @@ DATABASE_PATH=arb_data.db
 Never commit your real .env file to GitHub. Make sure it’s included in .gitignore.
 
 
-## 3. Build & Run
+## 3. Build the project
 
-- Build the project:
-
-  **cargo build --release**
+cargo build --release
 
 
-- Run the bot with logging enabled (Windows PowerShell):
+##4 Run the Bot
 
-  **$env:RUST_LOG="info"; cargo run --release**
+cargo run --release
+
+**$env:RUST_LOG="info"; cargo run --release**
 
 **Example Output**
 [2025-09-27T05:04:46Z INFO  polygon_arb_bot] Starting Polygon Arb Bot | Poll every 15s | Min profit 0.5 USDC
@@ -161,3 +156,4 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
