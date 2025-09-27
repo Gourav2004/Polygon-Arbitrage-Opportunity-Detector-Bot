@@ -150,11 +150,13 @@ cargo run --release
 
 **$env:RUST_LOG="info"; cargo run --release**
 
-**Example Output**
+## Example Output
+
 [2025-09-27T05:04:46Z INFO  polygon_arb_bot] Starting Polygon Arb Bot | Poll every 15s | Min profit 0.5 USDC
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
