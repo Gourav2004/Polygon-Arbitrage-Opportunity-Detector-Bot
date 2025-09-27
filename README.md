@@ -76,7 +76,8 @@ flowchart TD
 ---
 
 ## Setup & Installation
-1. Install Dependencies
+
+## 1. Add Dependencies
 
 Rust (version 1.70+ recommended)
 Install via rustup:
@@ -88,32 +89,35 @@ SQLite (used internally via rusqlite; usually no separate install needed)
 
 Cargo crates (listed in Cargo.toml, installed automatically during build).
 
-2. Configure .env
+## 2. Configure .env
 
 Create a .env file in the project root:
 
-RPC_URL=https://polygon-mainnet.infura.io/v3/YOUR_KEY
+RPC_URL=https://polygon-mainnet.infura.io/v3/YOUR_KEY  # Your Polygon node (Infura/Alchemy)
 
-DEX_A_ROUTER=0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506   # SushiSwap
+DEX_A_ROUTER=0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506    # Example: SushiSwap
 
-DEX_B_ROUTER=0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff   # QuickSwap
+DEX_B_ROUTER=0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff    # Example: QuickSwap
 
-TOKEN_IN=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619       # WETH
+TOKEN_IN=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619         # Example: WETH
 
-TOKEN_OUT=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174      # USDC
+TOKEN_OUT=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174        # Example: USDC
 
-TRADE_SIZE_WEI=1000000000000000000   # 1 WETH
+TRADE_SIZE_WEI=1000000000000000000                          # Trade size in wei (1 WETH = 1e18)
 
-MIN_PROFIT_USDC=0.5
+MIN_PROFIT_USDC=0.5                                         # Minimum profit to log an opportunity
 
-POLL_INTERVAL_SECS=15
+POLL_INTERVAL_SECS=15                                       # Polling interval in seconds
 
-SIMULATED_GAS_USDC=0.2
+SIMULATED_GAS_USDC=0.2                                      # Estimated gas cost in USDC
 
-DATABASE_PATH=arb_data.db
+DATABASE_PATH=arb_data.db                                    # SQLite database path
+
+**Important:** Replace YOUR_KEY and addresses with your own values.
+Never commit your real .env file to GitHub. Make sure it’s included in .gitignore.
 
 
-3. Build & Run
+## 3. Build & Run
 
 - Build the project:
 
@@ -125,11 +129,11 @@ DATABASE_PATH=arb_data.db
   **$env:RUST_LOG="info"; cargo run --release**
 
 **Example Output**
-[2025-09-26T12:23:48Z INFO  polygon_arb_bot] Starting polygon-arb-bot with poll_interval=15s, min_profit=0.5 USDC
+[2025-09-27T05:04:46Z INFO  polygon_arb_bot] Starting Polygon Arb Bot | Poll every 15s | Min profit 0.5 USDC
 
-[2025-09-26T12:23:50Z INFO  polygon_arb_bot] Prices: A = 3823.3225 | B = 3868.7322
+[2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
-[2025-09-26T12:23:50Z INFO  polygon_arb_bot]  Arbitrage opportunity! BUY on A at 3823.3225, SELL on B at 3868.7322 → Profit: 45.2097 USDC
+[2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
 
 
 
