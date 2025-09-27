@@ -103,7 +103,7 @@ flowchart TD
 
 ## 1. Clone the repository
 
-git clone https://github.com/your-username/polygon-arb-bot.git
+git clone https://github.com/Gourav2004/Polygon-Arbitrage-Opportunity-Detector-Bot.git
 
 cd polygon-arb-bot
 
@@ -157,6 +157,7 @@ cargo run --release
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
