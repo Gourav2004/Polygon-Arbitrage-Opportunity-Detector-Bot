@@ -41,7 +41,7 @@ Polygon Arbitrage Opportunity Detector Bot/
 
 ---
 
-##  System Architecture
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
@@ -63,7 +63,7 @@ flowchart TD
 
     subgraph Decimals[Token Decimals Cache]
         Provider --> ERC20[ERC20 Decimals Fetch]
-        ERC20 --> Cache[Decimals Cache (HashMap)]
+        ERC20 --> Cache["Decimals Cache (HashMap)"]
     end
 
     subgraph Loop[Main Arbitrage Loop]
@@ -78,6 +78,7 @@ flowchart TD
 
     DBInit --> DB
     Logger -->|Logs Prices, Errors, Opportunities| LogOut[(Console / Log File)]
+
                                                                                              
 ```
 
@@ -158,6 +159,7 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
