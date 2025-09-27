@@ -41,8 +41,7 @@ Polygon Arbitrage Opportunity Detector Bot/
 
 ---
 
-## Project Architecture / System Diagram
-
+##  System Architecture
 
 ```mermaid
 flowchart TD
@@ -54,7 +53,7 @@ flowchart TD
     end
 
     subgraph Blockchain[Blockchain Connection]
-        Config --> Provider[Polygon Provider (RPC)]
+        Config --> Provider["Polygon Provider (RPC)"]
     end
 
     subgraph Routers[DEX Routers]
@@ -78,7 +77,8 @@ flowchart TD
     end
 
     DBInit --> DB
-    Logger -->|Logs Prices, Errors, Opportunities| LogOut[(Console / Log File)]                                                                                              
+    Logger -->|Logs Prices, Errors, Opportunities| LogOut[(Console / Log File)]
+                                                                                             
 ```
 
 
@@ -158,6 +158,7 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
