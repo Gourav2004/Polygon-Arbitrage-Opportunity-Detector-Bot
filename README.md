@@ -93,30 +93,32 @@ Cargo crates (listed in Cargo.toml, installed automatically during build).
 
 Create a .env file in the project root:
 
-RPC_URL=https://polygon-mainnet.infura.io/v3/YOUR_KEY  # Your Polygon node (Infura/Alchemy)
+RPC_URL=YOUR_RPC_URL_HERE
 
-DEX_A_ROUTER=0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506    # Example: SushiSwap
+DEX_A_ROUTER=DEX_A_ROUTER_ADDRESS
 
-DEX_B_ROUTER=0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff    # Example: QuickSwap
+DEX_B_ROUTER=DEX_B_ROUTER_ADDRESS
 
-TOKEN_IN=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619         # Example: WETH
+TOKEN_IN=TOKEN_IN_ADDRESS
 
-TOKEN_OUT=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174        # Example: USDC
+TOKEN_OUT=TOKEN_OUT_ADDRESS
 
-TRADE_SIZE_WEI=1000000000000000000                          # Trade size in wei (1 WETH = 1e18)
+TRADE_SIZE_WEI=TRADE_SIZE
 
-MIN_PROFIT_USDC=0.5                                         # Minimum profit to log an opportunity
+MIN_PROFIT_USDC=0.5
 
-POLL_INTERVAL_SECS=15                                       # Polling interval in seconds
+POLL_INTERVAL_SECS=15
 
-SIMULATED_GAS_USDC=0.2                                      # Estimated gas cost in USDC
+SIMULATED_GAS_USDC=0.2
 
-DATABASE_PATH=arb_data.db                                    # SQLite database path
+DATABASE_PATH=arb_data.db
+
+............................................................................................
 
 **Important:** Replace YOUR_KEY and addresses with your own values.
 
 Never commit your real .env file to GitHub. Make sure it’s included in .gitignore.
-
+...........................................................................................
 
 ## 3. Build & Run
 
@@ -135,6 +137,7 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
