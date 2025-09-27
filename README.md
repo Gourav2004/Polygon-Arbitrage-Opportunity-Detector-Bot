@@ -46,21 +46,39 @@ Polygon Arbitrage Opportunity Detector Bot/
 
 ```mermaid
 flowchart TD
-    A[Polygon RPC Provider] --> B[DEX A Router]
-    A --> C[DEX B Router]
 
-    B --> D[Fetch Price for TOKEN_IN→TOKEN_OUT]
-    C --> E[Fetch Price for TOKEN_IN→TOKEN_OUT]
+    subgraph Config_and_Startup[Config & Startup]
+        ENV[.env File] --> Config[Config Loader]
+        Config --> Logger[Logger Init]
+        Config --> DBInit[SQLite DB Initializer]
+    end
 
-    D --> F[Compare Prices]
-    E --> F
+    subgraph Blockchain[Blockchain Connection]
+        Config --> Provider[Polygon Provider (RPC)]
+    end
 
-    F --> G{Profit > Threshold?}
-    G -- Yes --> H[Simulate Gas Costs]
-    H --> I[Log to SQLite Database]
-    G -- No --> J[Skip / Wait Next Cycle]
+    subgraph Routers[DEX Routers]
+        Provider --> DEXA[DEX A Router]
+        Provider --> DEXB[DEX B Router]
+    end
 
-    I --> K[Output to Console Logs]                                                                                               
+    subgraph Decimals[Token Decimals Cache]
+        Provider --> ERC20[ERC20 Decimals Fetch]
+        ERC20 --> Cache[Decimals Cache (HashMap)]
+    end
+
+    subgraph Loop[Main Arbitrage Loop]
+        DEXA --> Cycle[Arbitrage Cycle]
+        DEXB --> Cycle
+        Cache --> Cycle
+
+        Cycle --> Compare[Price Compare & Profit Logic]
+        Compare -->|Profitable| DB[SQLite Opportunities Table]
+        Compare --> Logger
+    end
+
+    DBInit --> DB
+    Logger -->|Logs Prices, Errors, Opportunities| LogOut[(Console / Log File)]                                                                                              
 ```
 
 
@@ -140,6 +158,7 @@ Never commit your real .env file to GitHub. Make sure it’s included in .gitign
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
