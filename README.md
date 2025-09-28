@@ -99,19 +99,21 @@ flowchart TD
 
 ---
 
-## Setup Instructions
+## Installation & Setup
 
-## 1. Installation
+**Follow these steps to get the Polygon Arbitrage Bot running locally:**
 
-- Rust (version 1.70+ recommended)
-Install via rustup:
+## 1. Prerequisites
 
-- curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+- **Rust (1.70+ recommended)**
+  Install via rustup:
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+  - **SQLite**
+    Used internally via **rusqlite**. No separate installation is required.
 
-- SQLite (used internally via rusqlite; usually no separate install needed)
-
-- Cargo crates (listed in Cargo.toml, installed automatically during build).
+    - **Cargo dependencies**
+      All Rust crates listed in **Cargo.toml** are installed automatically during build.
 
 
 ## 2. Create .env file
@@ -152,9 +154,15 @@ cargo build --release
 
 ## 4 Run the Bot
 
-cargo run --release
+**cargo run --release**
+This compiles the bot in release mode for optimal performance.
 
+**Windows PowerShell:**
 **$env:RUST_LOG="info"; cargo run --release**
+
+**Linux/macOS:**
+**RUST_LOG=info cargo run --release**
+
 
 ## Example Output
 
@@ -163,6 +171,7 @@ cargo run --release
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
