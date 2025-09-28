@@ -159,11 +159,11 @@ cargo build --release
 This compiles the bot in release mode for optimal performance.
 
 - **Windows PowerShell:**
-- 
+  
 **$env:RUST_LOG="info"; cargo run --release**
 
 - **Linux/macOS:**
-- 
+ 
 **RUST_LOG=info cargo run --release**
 
 
@@ -174,6 +174,7 @@ This compiles the bot in release mode for optimal performance.
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
 
 
 
