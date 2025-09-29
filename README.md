@@ -7,7 +7,6 @@ A Rust-based bot that tracks arbitrage opportunities between two decentralized e
 ## Overview
 
 Crypto markets move fast — sometimes two DEXs give different prices for the same token pair.
-
 This project scans Polygon DEXs, fetches token swap prices (e.g., WETH → USDC), and highlights opportunities where you can buy low on one DEX and sell high on another.
 
 **Why it’s useful:**
@@ -218,10 +217,6 @@ CREATE TABLE opportunities (
 
 - Backtest with historical Polygon data.
 
-## Author
-
-- [LinkedIn](https://www.linkedin.com/in/gouravmehar/)  
-- [GitHub](https://github.com/Gourv2004/polygon-arb-bot)
 
 
 
