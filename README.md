@@ -108,11 +108,11 @@ flowchart TD
   Install via rustup:
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-  - **SQLite**
-    Used internally via **rusqlite**. No separate installation is required.
+- **SQLite**
+  Used internally via **rusqlite**. No separate installation is required.
 
-    - **Cargo dependencies**
-      All Rust crates listed in **Cargo.toml** are installed automatically during build.
+- **Cargo dependencies**
+  All Rust crates listed in **Cargo.toml** are installed automatically during build.
 
 
 ## 2. Create .env file
@@ -216,6 +216,7 @@ CREATE TABLE opportunities (
 - Add web dashboard for real-time visualization.
 
 - Backtest with historical Polygon data.
+
 
 
 
