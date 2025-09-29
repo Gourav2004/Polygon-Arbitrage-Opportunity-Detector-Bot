@@ -195,13 +195,21 @@ Polygon Arbitrage Opportunity Detector Bot/
 - **Database Schema**
 
 CREATE TABLE opportunities (
+
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    
     timestamp TEXT NOT NULL,
+    
     dex_buy TEXT NOT NULL,
+    
     dex_sell TEXT NOT NULL,
+    
     amount_in TEXT NOT NULL,
+    
     amount_out_buy TEXT NOT NULL,
+    
     amount_out_sell TEXT NOT NULL,
+    
     profit REAL NOT NULL
 );
 
@@ -216,6 +224,7 @@ CREATE TABLE opportunities (
 - Add web dashboard for real-time visualization.
 
 - Backtest with historical Polygon data.
+
 
 
 
