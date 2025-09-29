@@ -117,27 +117,27 @@ flowchart TD
 
 ## 2. Create .env file
 
-- Create a .env file in the project root:
+ **Create a .env file in the project root:**
 
-- RPC_URL=YOUR_RPC_URL_HERE
+- RPC_URL = YOUR_RPC_URL_HERE
 
-- DEX_A_ROUTER=DEX_A_ROUTER_ADDRESS
+- DEX_A_ROUTER = DEX_A_ROUTER_ADDRESS
 
-- DEX_B_ROUTER=DEX_B_ROUTER_ADDRESS
+- DEX_B_ROUTER = DEX_B_ROUTER_ADDRESS
 
-- TOKEN_IN=TOKEN_IN_ADDRESS
+- TOKEN_IN = TOKEN_IN_ADDRESS
 
-- TOKEN_OUT=TOKEN_OUT_ADDRESS
+- TOKEN_OUT = TOKEN_OUT_ADDRESS
 
-- TRADE_SIZE_WEI=TRADE_SIZE
+- TRADE_SIZE_WEI = TRADE_SIZE
 
-- MIN_PROFIT_USDC=0.5
+- MIN_PROFIT_USDC = 0.5
 
-- POLL_INTERVAL_SECS=15
+- POLL_INTERVAL_SECS = 15
 
-- SIMULATED_GAS_USDC=0.2
+- SIMULATED_GAS_USDC = 0.2
 
-- DATABASE_PATH=arb_data.db
+- DATABASE_PATH = arb_data.db
 
 
 
@@ -216,6 +216,7 @@ CREATE TABLE opportunities (
 - Add web dashboard for real-time visualization.
 
 - Backtest with historical Polygon data.
+
 
 
 
