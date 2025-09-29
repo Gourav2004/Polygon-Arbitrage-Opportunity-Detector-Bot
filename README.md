@@ -4,6 +4,22 @@ A Rust-based bot that tracks arbitrage opportunities between two decentralized e
 
 ---
 
+## Overview
+
+Crypto markets move fast — sometimes two DEXs give different prices for the same token pair.
+
+This project scans Polygon DEXs, fetches token swap prices (e.g., WETH → USDC), and highlights opportunities where you can buy low on one DEX and sell high on another.
+
+**Why it’s useful:**
+
+- Demonstrates skills in blockchain, Rust, async programming, and databases.
+
+- Shows understanding of real-time financial systems.
+
+- Can be extended into a real trading bot.
+
+---
+
 ## Features
 
 - **Two-DEX Price Fetching** – Fetches live token pair prices (e.g., WETH/USDC) from **two Polygon DEXes** (QuickSwap and SushiSwap).  
@@ -22,22 +38,6 @@ A Rust-based bot that tracks arbitrage opportunities between two decentralized e
 - **DEX Interaction:** Uniswap V2-style routers (QuickSwap, SushiSwap)  
 - **Database:** SQLite (via rusqlite)  
 - **Libraries:** ethers-rs, tokio, dotenv, serde, anyhow, log, env_logger  
-
----
-
-## Project Structure
-
-```plaintext
-Polygon Arbitrage Opportunity Detector Bot/
-│── src/
-│   ├── main.rs       
-│   └── uniswap.rs   
-│
-│── .env             
-│── .gitignore       
-│── Cargo.toml      
-│── README.md         # Project documentation
-```
 
 ---
 
@@ -174,6 +174,55 @@ This compiles the bot in release mode for optimal performance.
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot] Prices: A = 3950.5280 | B = 3998.5273
 
 [2025-09-27T05:04:48Z INFO  polygon_arb_bot]  Arb Opportunity: Buy on DEX A @ 3950.5280, Sell on DEX B @ 3998.5273 → Profit: 47.7993 USDC
+
+---
+
+## Technical Details
+
+- **File Structure**
+
+```plaintext
+Polygon Arbitrage Opportunity Detector Bot/
+│── src/
+│   ├── main.rs       
+│   └── uniswap.rs   
+│
+│── .env             
+│── .gitignore       
+│── Cargo.toml      
+│── README.md         # Project documentation
+```
+
+- **Database Schema**
+
+CREATE TABLE opportunities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp TEXT NOT NULL,
+    dex_buy TEXT NOT NULL,
+    dex_sell TEXT NOT NULL,
+    amount_in TEXT NOT NULL,
+    amount_out_buy TEXT NOT NULL,
+    amount_out_sell TEXT NOT NULL,
+    profit REAL NOT NULL
+);
+
+---
+
+## Future Improvements
+
+- Add automatic trade execution via smart contracts.
+
+- Extend to more DEXs (Balancer, Curve).
+
+- Add web dashboard for real-time visualization.
+
+- Backtest with historical Polygon data.
+
+## Author
+
+- [LinkedIn](https://www.linkedin.com/in/gouravmehar/)  
+- [GitHub](https://github.com/Gourv2004/polygon-arb-bot)
+
 
 
 
