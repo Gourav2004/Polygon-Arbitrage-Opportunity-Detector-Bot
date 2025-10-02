@@ -1,4 +1,4 @@
-//! Polygon arbitrage opportunity detector bot - Gourav Mehar
+ //! Polygon arbitrage opportunity detector bot - Gourav Mehar
 
 use anyhow::Context;    // Just normal error handling stuff with some helper context.
 
