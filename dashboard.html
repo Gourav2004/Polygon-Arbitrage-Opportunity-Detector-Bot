@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Polygon Arbitrage Bot | Real-Time Monitor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* -------------------- Base Styles -------------------- */
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #080a0e;
+      color: #e4e7eb;
+      overflow-x: hidden;
+      transition: background-color 0.5s;
+    }
+
+    /* -------------------- Navigation Bar -------------------- */
+    #navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(14, 18, 25, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1f2a37;
+    }
+
+    #navbar .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #7f5af0;
+    }
+
+    #navbar .nav-link {
+      color: #94a3b8;
+      text-decoration: none;
+      margin-left: 25px;
+      transition: color 0.3s;
+    }
+
+    #navbar .nav-link:hover {
+      color: #9673ff;
+    }
+
+    /* -------------------- Landing Page -------------------- */
+    #landing {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      padding-top: 60px;
+    }
+
+    .bg-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f151c, #080a0e, #1f2a37, #080a0e);
+      background-size: 400% 400%;
+      animation: gradientShift 40s ease infinite;
+      z-index: -2;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      box-shadow: 0 0 4px rgba(127, 90, 240, 0.5);
+      animation: float 20s linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50vw);
+        opacity: 0;
+      }
+    }
+
+    .fade-slide {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .fade-slide.delay1 {
+      animation-delay: 0.3s;
+    }
+
+    .fade-slide.delay2 {
+      animation-delay: 0.6s;
+    }
+
+    .fade-slide.delay3 {
+      animation-delay: 0.9s;
+    }
+
+    .fade-slide.delay4 {
+      animation-delay: 1.2s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #landing h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(127, 90, 240, 0.4);
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    #landing p {
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      max-width: 700px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    #landing button {
+      background: #7f5af0;
+      border: none;
+      color: white;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(127, 90, 240, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #landing button:hover {
+      background: #9673ff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(127, 90, 240, 0.6);
+    }
+
+    .key-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 60px;
+      padding: 20px 0;
+      border-top: 1px solid #1f2a37;
+      border-bottom: 1px solid #1f2a37;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .stat-item h3 {
+      font-size: 2.2rem;
+      color: #2ecc71;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .stat-item p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #landing footer {
+      margin-top: 50px;
+      font-size: 0.8rem;
+      color: #525f7a;
+    }
+
+    /* -------------------- Dashboard -------------------- */
+    #dashboard {
+      display: none;
+      padding: 30px 50px;
+      min-height: 100vh;
+      background-color: #080a0e;
+    }
+
+    h2 {
+      color: #7f5af0;
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .dataTables_wrapper {
+      background: #0f151c;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    table.dataTable {
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0f151c;
+    }
+
+    th {
+      background: #1f2a37;
+      color: #e4e7eb;
+      border-bottom: 2px solid #7f5af0;
+      padding: 15px 10px;
+      font-weight: 600;
+    }
+
+    td {
+      background: #0f151c;
+      color: #c9d1d9;
+      border-bottom: 1px solid #1f2a37;
+      padding: 12px 10px;
+      transition: background 0.3s;
+    }
+
+    tr:hover td {
+      background: #161b22;
+    }
+
+    .profit-positive {
+      color: #2ecc71;
+      font-weight: 600;
+    }
+
+    .profit-negative {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+
+    #profitChart {
+      margin-top: 40px;
+      background: #0f151c;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      max-height: 450px;
+    }
+
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate {
+      color: #94a3b8 !important;
+      padding: 10px 0;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      background: #1f2a37 !important;
+      color: #e4e7eb !important;
+      border: 1px solid #1f2a37 !important;
+      border-radius: 4px !important;
+      margin: 0 3px;
+      transition: background 0.3s;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+      background: #9673ff !important;
+      color: white !important;
+      border-color: #9673ff !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      background: #7f5af0 !important;
+      color: white !important;
+    }
+
+    .dex-link-container {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .dex-link-container a {
+      color: #7f5af0;
+      text-decoration: none;
+      transition: color 0.3s;
+      margin-right: 5px;
+    }
+
+    .dex-link-container a:hover {
+      color: #9673ff;
+    }
+
+    .dex-link-container img {
+      min-width: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="navbar">
+    <div class="logo">ARB.MONITOR</div>
+    <div>
+      <a href="#" class="nav-link" id="nav-home-link">Home</a>
+      <a href="#dashboard" class="nav-link" id="nav-dashboard-link">Dashboard</a>
+      <a href="#" class="nav-link" id="nav-about-link">About</a>
+    </div>
+  </nav>
+
+  <section id="landing">
+    <div class="bg-animation"></div>
+    <h1 class="fade-slide">Arbitrage Intelligence. Refined.</h1>
+    <p class="fade-slide delay1">
+      Experience <b>Real-Time Arbitrage Monitoring</b> across Polygon's major DEXs. Our proprietary engine delivers
+      ultra-low-latency market insights directly to your dashboard.
+    </p>
+    <button id="open-dashboard" class="fade-slide delay2">View Live Opportunities →</button>
+
+    <div class="key-stats fade-slide delay3">
+      <div class="stat-item">
+        <h3>1,200+</h3>
+        <p>Opportunities Detected</p>
+      </div>
+      <div class="stat-item">
+        <h3>0.14s</h3>
+        <p>Average Latency</p>
+      </div>
+      <div class="stat-item">
+        <h3>$1.5M+</h3>
+        <p>Potential Profit Monitored</p>
+      </div>
+    </div>
+
+    <footer class="fade-slide delay4">
+      Powered by Rust and Ethers.rs — Data is for informational purposes only.
+    </footer>
+  </section>
+
+  <section id="dashboard" class="fade-in">
+    <h2>📊 Real-Time Opportunity Stream</h2>
+    <table id="opportunities" class="display">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Buy DEX / Price</th>
+          <th>Sell DEX / Price</th>
+          <th>Gross Profit (USDC)</th>
+          <th>Gas (Gwei)</th>
+          <th>Block</th>
+        </tr>
+      </thead>
+    </table>
+
+    <canvas id="profitChart"></canvas>
+    <footer style="text-align:center;margin-top:20px;">
+      🔄 Real-Time Feed | Arbitrage Intelligence Monitor
+    </footer>
+  </section>
+
+  <script>
+    const DEX_LINKS = {
+      "A": { name: "QuickSwap", url: "https://quickswap.exchange/#/swap", img: "https://cryptologos.cc/logos/quickswap-quick-logo.png?v=025" },
+      "B": { name: "Uniswap V3", url: "https://app.uniswap.org/#/swap", img: "https://cryptologos.cc/logos/uniswap-uni-logo.png?v=025" },
+    };
+
+    function getDexInfo(dexLetter) {
+      if (dexLetter === 'A') return DEX_LINKS['A'];
+      if (dexLetter === 'B') return DEX_LINKS['B'];
+      return { name: dexLetter, url: '#', img: '' };
+    }
+
+    let profitChart;
+
+    function openDashboard() {
+      document.getElementById("landing").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      initTable();
+      document.getElementById('navbar').style.backgroundColor = 'rgba(8, 10, 14, 0.9)';
+    }
+
+    document.getElementById("open-dashboard").addEventListener("click", openDashboard);
+
+    document.getElementById("nav-dashboard-link").addEventListener("click", (e) => {
+      e.preventDefault();
+      const isDashboardVisible = document.getElementById("dashboard").style.display === "block";
+      if (isDashboardVisible) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        openDashboard();
+      }
+    });
+
+    document.getElementById("nav-home-link").addEventListener("click", (e) => {
+      e.preventDefault();
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("landing").style.display = "flex";
+      document.getElementById('navbar').style.backgroundColor = 'rgba(14, 18, 25, 0.8)';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById("nav-about-link").addEventListener("click", (e) => {
+      e.preventDefault();
+      const aboutText = "Polygon Arbitrage Bot Monitor\n\nThis application displays real-time arbitrage opportunities monitored by a backend Rust application. Data is for informational purposes only.";
+      console.log(aboutText);
+    });
+
+    function initTable() {
+      if ($.fn.DataTable.isDataTable('#opportunities')) {
+        $('#opportunities').DataTable().ajax.reload(updateChart, false);
+        return;
+      }
+
+      const table = $('#opportunities').DataTable({
+        ajax: {
+          url: '/opportunities',
+          dataSrc: '',
+          error: function (xhr, status, error) {
+            console.error("DataTables Ajax error:", status, error);
+            $('#opportunities_wrapper').html('<p style="color: red; text-align: center;">Error loading data. Check if the Rust server is running and the API endpoint is correct.</p>');
+          }
+        },
+        columns: [
+          {
+            data: 'timestamp',
+            render: d => `<span style="color:#94a3b8">${new Date(d).toLocaleString()}</span>`
+          },
+          {
+            data: 'dex_buy',
+            render: (data, type, row) => {
+              const dex = getDexInfo(data);
+              const priceFieldName = `price_${data}`;
+              const price = parseFloat(row[priceFieldName]);
+              const priceDisplay = !isNaN(price) ? `@ ${price.toFixed(4)}` : 'N/A';
+              return `<div class="dex-link-container">
+                <img src="${dex.img}" style="width:20px;height:20px;border-radius:50%;margin-right:8px; display: block;" 
+                  onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 20 20\' fill=\'#7f5af0\'><circle cx=\'10\' cy=\'10\' r=\'10\'/></svg>'" 
+                  alt="${dex.name} logo">
+                <a href="${dex.url}" target="_blank">${dex.name}</a>
+                <span style="color:#f9a825; margin-left: 5px; font-weight: 500;">${priceDisplay}</span>
+              </div>`;
+            }
+          },
+          {
+            data: 'dex_sell',
+            render: (data, type, row) => {
+              const dex = getDexInfo(data);
+              const priceFieldName = `price_${data}`;
+              const price = parseFloat(row[priceFieldName]);
+              const priceDisplay = !isNaN(price) ? `@ ${price.toFixed(4)}` : 'N/A';
+              return `<div class="dex-link-container">
+                <img src="${dex.img}" style="width:20px;height:20px;border-radius:50%;margin-right:8px; display: block;" 
+                  onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 20 20\' fill=\'#7f5af0\'><circle cx=\'10\' cy=\'10\' r=\'10\'/></svg>'" 
+                  alt="${dex.name} logo">
+                <a href="${dex.url}" target="_blank">${dex.name}</a>
+                <span style="color:#f9a825; margin-left: 5px; font-weight: 500;">${priceDisplay}</span>
+              </div>`;
+            }
+          },
+          {
+            data: 'profit',
+            render: d => {
+              const profit = parseFloat(d);
+              return `<span class="${profit > 0 ? 'profit-positive' : 'profit-negative'}">${profit.toFixed(4)} $</span>`;
+            }
+          },
+          {
+            data: 'gas_price_gwei',
+            render: d => {
+              const gas = parseFloat(d);
+              return `<span style="color:#f9a825">${!isNaN(gas) ? gas.toFixed(2) : 'N/A'}</span>`;
+            }
+          },
+          {
+            data: 'block_number',
+            render: d => `<span style="color:#5dade2">${d !== undefined ? d : '---'}</span>`
+          }
+        ],
+        order: [[0, 'desc']],
+        pageLength: 10,
+        responsive: true,
+        dom: 'lfrtip'
+      });
+
+      const ctx = document.getElementById('profitChart').getContext('2d');
+      profitChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Profit (USDC)',
+            backgroundColor: [],
+            borderColor: '#080a0e',
+            borderWidth: 2,
+            data: []
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 1.5,
+          plugins: {
+            legend: {
+              labels: { color: '#e4e7eb', font: { size: 14 } }
+            },
+            tooltip: {
+              titleFont: { size: 14 },
+              bodyFont: { size: 12 },
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || '';
+                  if (label) { label += ': '; }
+                  if (context.parsed.r !== null) {
+                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.r);
+                  }
+                  return label;
+                }
+              }
+            }
+          },
+          scales: {
+            r: {
+              angleLines: { color: '#1f2a37' },
+              grid: { color: '#1f2a37' },
+              pointLabels: { color: '#94a3b8' },
+              ticks: {
+                color: '#94a3b8',
+                backdropColor: '#0f151c'
+              }
+            }
+          }
+        }
+      });
+
+      setInterval(() => {
+        table.ajax.reload(updateChart, false);
+      }, 4000);
+    }
+
+    function updateChart(json) {
+      if (!json) return;
+      const sortedJson = [...json].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      const recentOpportunities = sortedJson.slice(0, 20).reverse();
+      const profits = recentOpportunities.map(o => Math.abs(parseFloat(o.profit || 0)));
+      const timestamps = recentOpportunities.map(o => new Date(o.timestamp).toLocaleTimeString());
+      const colors = recentOpportunities.map(o => parseFloat(o.profit) > 0 ? 'rgba(46, 204, 113, 0.7)' : 'rgba(231, 76, 60, 0.7)');
+      profitChart.data.labels = timestamps;
+      profitChart.data.datasets[0].data = profits;
+      profitChart.data.datasets[0].backgroundColor = colors;
+      profitChart.update();
+    }
+
+    const numParticles = 100;
+    for (let i = 0; i < numParticles; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 20 + 's';
+      p.style.animationDuration = 15 + Math.random() * 15 + 's';
+      document.querySelector('#landing').appendChild(p);
+    }
+  </script>
+</body>
+</html>
