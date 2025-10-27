@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Polygon Arbitrage Bot | Real-Time Monitor</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -28,11 +29,18 @@
       background-color: rgba(14, 18, 25, 0.8);
       backdrop-filter: blur(8px);
       z-index: 10;
-      padding: 15px 40px;
+      /* Adjusted padding from 10px to 5px on left/right for maximum clearance */
+      padding: 15px 5px; 
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #1f2a37;
+    }
+
+    #nav-links-container {
+      display: flex;
+      gap: 15px; 
+      align-items: center;
     }
 
     #navbar .logo {
@@ -42,30 +50,34 @@
     }
 
     #navbar .nav-link {
-      color: #94a3b8;
+      color: #c9d1d9; 
       text-decoration: none;
-      padding: 8px 15px;
-      margin-left: 10px;
-      transition: color 0.3s;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: color 0.3s, background-color 0.3s;
+      font-weight: 500;
     }
 
     #navbar .nav-link:hover {
-      color: #9673ff;
+      color: #ffffff;
+      background-color: rgba(127, 90, 240, 0.1);
     }
 
-    /* -------------------- Landing Page -------------------- */
-    #landing {
+    /* -------------------- Common Section Styles -------------------- */
+    .page-section {
       position: relative;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       overflow: hidden;
-      padding-top: 60px;
+      padding-top: 80px; 
+      display: none; 
     }
 
+    /* -------------------- Background & Animation -------------------- */
     .bg-animation {
       position: absolute;
       top: 0;
@@ -93,6 +105,7 @@
       box-shadow: 0 0 4px rgba(127, 90, 240, 0.5);
       animation: float 20s linear infinite;
       opacity: 0;
+      z-index: -1;
     }
 
     @keyframes float {
@@ -112,9 +125,16 @@
     .fade-slide.delay2 { animation-delay: 0.6s; }
     .fade-slide.delay3 { animation-delay: 0.9s; }
     .fade-slide.delay4 { animation-delay: 1.2s; }
+    .fade-slide.delay5 { animation-delay: 1.5s; }
+    .fade-slide.delay6 { animation-delay: 1.8s; }
 
     @keyframes fadeInUp {
       to { opacity: 1; transform: translateY(0); }
+    }
+    /* -------------------- Landing Section -------------------- */
+    #landing {
+      /* Overrides .page-section display:none */
+      display: flex; 
     }
 
     #landing h1 {
@@ -193,10 +213,85 @@
       font-size: 0.8rem;
       color: #525f7a;
     }
+    
+    /* -------------------- About Section -------------------- */
+    #about {
+      justify-content: flex-start; /* Align content to the top */
+      padding: 120px 50px 50px 50px;
+      text-align: left;
+    }
 
-    /* -------------------- Dashboard -------------------- */
+    .about-container {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      z-index: 1; /* Ensure content is above background */
+      position: relative;
+    }
+    
+    #about h2 {
+      color: #7f5af0;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 800;
+      text-shadow: 0 0 10px rgba(127, 90, 240, 0.3);
+    }
+    
+    .about-item {
+      background-color: rgba(15, 21, 28, 0.7); /* Slightly translucent card */
+      backdrop-filter: blur(4px);
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      border-left: 4px solid #7f5af0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+    }
+    
+    /* MODIFIED: Added lift and right slide on hover */
+    .about-item:hover {
+      /* Lift it up and slide it slightly right for a dynamic feel */
+      transform: translate(5px, -5px); 
+      /* Enhance the shadow on hover with a purple glow */
+      box-shadow: 0 10px 30px rgba(127, 90, 240, 0.25);
+    }
+
+    .about-item h3 {
+      font-size: 1.5rem;
+      color: #2ecc71;
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    .about-item p, .about-item ul {
+      font-size: 1rem;
+      color: #c9d1d9;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .about-item ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .about-item li {
+      margin-bottom: 5px;
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .about-item li::before {
+      content: '⚡';
+      color: #7f5af0;
+      position: absolute;
+      left: 0;
+    }
+
+    /* -------------------- Dashboard Section -------------------- */
     #dashboard {
-      display: none;
       padding: 30px 50px;
       min-height: 100vh;
       background-color: #080a0e;
@@ -216,7 +311,7 @@
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
-
+    
     table.dataTable {
       border-radius: 8px;
       overflow: hidden;
@@ -294,23 +389,52 @@
     .dex-link-container a:hover {
       color: #9673ff;
     }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      #navbar {
+        /* Reduced to 5px for maximum left/right clearance on small screens */
+        padding: 15px 5px; 
+      }
+      #landing h1 {
+        font-size: 2.5rem;
+      }
+      #landing p {
+        font-size: 1rem;
+        padding: 0 20px;
+      }
+      .key-stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+      #dashboard {
+        padding: 20px;
+      }
+      #about {
+        padding: 100px 20px 20px 20px;
+      }
+      .about-item {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 
 <body>
   <nav id="navbar">
     <div class="logo">DexSight</div>
-    <div>
+    <div id="nav-links-container">
       <a href="#" class="nav-link" id="nav-home-link">Home</a>
       <a href="#dashboard" class="nav-link" id="nav-dashboard-link">Dashboard</a>
-      <a href="#" class="nav-link" id="nav-about-link">About</a>
+      <a href="#about" class="nav-link" id="nav-about-link">About</a>
     </div>
   </nav>
 
-  <section id="landing">
+  <!-- LANDING SECTION -->
+  <section id="landing" class="page-section" style="display: flex;">
     <div class="bg-animation"></div>
 
-    <h1 class="fade-slide">Arbitrage Intelligence. Refined.</h1>
+    <h1 class="fade-slide">The Future of Arbitrage Intelligence.</h1>
     <p class="fade-slide delay1">
       Experience <strong>Real-Time Arbitrage Monitoring</strong> across Polygon's major DEXs.
       Our proprietary engine delivers ultra-low-latency market insights directly to your dashboard.
@@ -338,7 +462,60 @@
     </footer>
   </section>
 
-  <section id="dashboard" class="fade-in">
+  <!-- ABOUT SECTION -->
+  <section id="about" class="page-section">
+    <div class="bg-animation"></div>
+    <div class="about-container">
+      <h2 class="fade-slide">About DexSight: Polygon Arbitrage Bot Monitor</h2>
+
+      <div class="about-item fade-slide delay1">
+        <h3>The Vision</h3>
+        <p>
+          DexSight Arbitrage Bot — a next-generation real-time monitoring platform engineered to uncover high-value trading opportunities across decentralized exchanges on the Polygon network.
+        </p>
+      </div>
+
+      <div class="about-item fade-slide delay2">
+        <h3>Our Mission</h3>
+        <p>
+          Built for precision, DexSight allows traders and developers to uncover market inefficiencies across liquidity pools — powering smarter arbitrage and transparent price discovery for a more efficient decentralized future.
+        </p>
+      </div>
+
+      <div class="about-item fade-slide delay3">
+        <h3>Under the Hood</h3>
+        <p>
+          Real-time DEX scanning. Instant profit insights.
+DexSight tracks token prices across Polygon exchanges, automatically detecting arbitrage opportunities with live dashboards and visual profit tracking.
+        </p>
+      </div>
+
+      <div class="about-item fade-slide delay4">
+        <h3>Precision Highlights</h3>
+        <ul>
+          <li> Live arbitrage opportunity tracking</li>
+          <li> Profit visualization with interactive charts (Polar Area Chart)</li>
+          <li> Secure, non-custodial data access</li>
+          <li> Built on the fast and scalable Polygon blockchain</li>
+        </ul>
+      </div>
+      
+      <div class="about-item fade-slide delay5">
+        <h3>Next Frontier</h3>
+        <p>
+          Our goal is to make blockchain data analysis and arbitrage monitoring more transparent, accessible, and efficient for everyone in the DeFi ecosystem.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- DASHBOARD SECTION -->
+  <section id="dashboard" class="page-section">
+    <!-- The dashboard content is centered at the top, so we override .page-section flex properties here -->
+    <style>#dashboard { display: none; justify-content: flex-start; }</style>
+
     <h2>Real-Time Opportunity Stream</h2>
     <table id="opportunities" class="display">
       <thead>
@@ -356,15 +533,16 @@
 
     <canvas id="profitChart"></canvas>
 
-    <footer style="text-align:center;margin-top:20px;">
+    <footer style="text-align:center;margin-top:20px;color:#94a3b8;">
       🔄 Real-Time Feed | Arbitrage Intelligence Monitor
     </footer>
   </section>
 
   <script>
+    // Constants for DEX information
     const DEX_LINKS = {
-      "A": { name: "QuickSwap", url: "https://quickswap.exchange/#/swap"},
-      "B": { name: "Uniswap V3", url: "https://app.uniswap.org/#/swap"},
+      "A": { name: "QuickSwap", url: "https://quickswap.exchange/#/swap" },
+      "B": { name: "Uniswap V3", url: "https://app.uniswap.org/#/swap" },
     };
 
     function getDexInfo(dexLetter) {
@@ -374,46 +552,56 @@
     }
 
     let profitChart;
+    let table; // Reference to the DataTable instance
 
-    function openDashboard() {
-      document.getElementById("landing").style.display = "none";
-      document.getElementById("dashboard").style.display = "block";
-      initTable();
-      document.getElementById('navbar').style.backgroundColor = 'rgba(8, 10, 14, 0.9)';
+    // Function to manage all section visibility
+    function showSection(sectionId) {
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.style.display = 'none';
+      });
+
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        // Dashboard uses 'block' display for DataTables; Landing and About use 'flex'
+        targetSection.style.display = (sectionId === 'dashboard' ? 'block' : 'flex');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Adjust navbar background and run specific initializers
+      if (sectionId === 'dashboard') {
+        document.getElementById('navbar').style.backgroundColor = 'rgba(8, 10, 14, 0.9)';
+        initTable();
+      } else if (sectionId === 'about') {
+        document.getElementById('navbar').style.backgroundColor = 'rgba(8, 10, 14, 0.9)';
+      } else { // landing
+        document.getElementById('navbar').style.backgroundColor = 'rgba(14, 18, 25, 0.8)';
+      }
     }
 
-    document.getElementById("open-dashboard").addEventListener("click", openDashboard);
-
+    // Navigation handlers
+    document.getElementById("open-dashboard").addEventListener("click", () => showSection('dashboard'));
     document.getElementById("nav-dashboard-link").addEventListener("click", (e) => {
       e.preventDefault();
-      const isDashboardVisible = document.getElementById("dashboard").style.display === "block";
-      if (isDashboardVisible) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        openDashboard();
-      }
+      showSection('dashboard');
     });
-
     document.getElementById("nav-home-link").addEventListener("click", (e) => {
       e.preventDefault();
-      document.getElementById("dashboard").style.display = "none";
-      document.getElementById("landing").style.display = "flex";
-      document.getElementById('navbar').style.backgroundColor = 'rgba(14, 18, 25, 0.8)';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showSection('landing');
     });
-
+    // New handler for the About link
     document.getElementById("nav-about-link").addEventListener("click", (e) => {
       e.preventDefault();
-      alert("Polygon Arbitrage Bot Monitor\n\nThis application displays real-time arbitrage opportunities monitored by a backend Rust application. Data is for informational purposes only.");
+      showSection('about');
     });
 
+    // Chart and Table initialization (remains mostly the same)
     function initTable() {
       if ($.fn.DataTable.isDataTable('#opportunities')) {
         $('#opportunities').DataTable().ajax.reload(updateChart, false);
         return;
       }
 
-      const table = $('#opportunities').DataTable({
+      table = $('#opportunities').DataTable({
         ajax: {
           url: '/opportunities',
           dataSrc: '',
@@ -465,6 +653,10 @@
       });
 
       const ctx = document.getElementById('profitChart').getContext('2d');
+      if (profitChart) {
+          profitChart.destroy(); // Destroy old chart instance if it exists
+      }
+      
       profitChart = new Chart(ctx, {
         type: 'polarArea',
         data: {
@@ -512,13 +704,16 @@
         }
       });
 
+      // Reload data every 4 seconds
       setInterval(() => {
-        table.ajax.reload(updateChart, false);
+        if (document.getElementById("dashboard").style.display === "block") {
+            table.ajax.reload(updateChart, false);
+        }
       }, 4000);
     }
 
     function updateChart(json) {
-      if (!json) return;
+      if (!json || !profitChart) return;
       const sortedJson = [...json].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
       const recentOpportunities = sortedJson.slice(0, 20).reverse();
       const profits = recentOpportunities.map(o => Math.abs(parseFloat(o.profit || 0)));
@@ -533,17 +728,36 @@
       profitChart.data.datasets[0].backgroundColor = colors;
       profitChart.update();
     }
-
+    
+    // Particle generation logic (Refactored to handle multiple sections with the same class)
     const numParticles = 100;
-    for (let i = 0; i < numParticles; i++) {
-      const p = document.createElement('div');
-      p.classList.add('particle');
-      p.style.left = Math.random() * 100 + '%';
-      p.style.top = Math.random() * 100 + '%';
-      p.style.animationDelay = Math.random() * 20 + 's';
-      p.style.animationDuration = 15 + Math.random() * 15 + 's';
-      document.querySelector('#landing').appendChild(p);
+    
+    function generateParticlesForSection(selector) {
+        const container = document.querySelector(selector);
+        if (!container) return;
+
+        // Ensure particles are only added once per section
+        if (container.dataset.particlesGenerated) return; 
+
+        for (let i = 0; i < numParticles; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            // Randomize starting position and animation properties
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 20 + 's';
+            p.style.animationDuration = 15 + Math.random() * 15 + 's';
+            container.appendChild(p);
+        }
+        container.dataset.particlesGenerated = true; // Mark as generated
     }
+    
+    // Generate particles for both landing and about pages on load
+    window.onload = function() {
+        generateParticlesForSection('#landing');
+        generateParticlesForSection('#about');
+    }
+    
   </script>
 </body>
 </html>
