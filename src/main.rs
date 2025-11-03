@@ -1,4 +1,4 @@
- //! Polygon arbitrage bot with web dashboard
+//! Polygon arbitrage bot with web dashboard
 
 use anyhow::Context;
 use chrono::Utc;
@@ -121,7 +121,11 @@ async fn main() -> anyhow::Result<()> {
         }
     });
 
-    // Start web server
+    // --- ✅ FIXED FOR RENDER: dynamic port + 0.0.0.0 binding ---
+    let port = env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let bind_address = format!("0.0.0.0:{}", port);
+    println!("Starting web server on {}", bind_address);
+
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(Arc::clone(&conn)))
@@ -129,7 +133,7 @@ async fn main() -> anyhow::Result<()> {
             .service(get_opportunities)
             .service(Files::new("/static", "./static"))
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(bind_address)?
     .run()
     .await?;
 
@@ -223,7 +227,7 @@ async fn run_cycle<M: Middleware + 'static>(
     let dex_a_amount_out = a_amounts.last().cloned().unwrap_or_else(U256::zero);
     let dex_b_amount_out = b_amounts.last().cloned().unwrap_or_else(U256::zero);
 
-    let trade_size_f = u256_to_f64(cfg.trade_size_wei, decimals_in); // now correct human-readable
+    let trade_size_f = u256_to_f64(cfg.trade_size_wei, decimals_in);
     let price_a = u256_to_f64(dex_a_amount_out, decimals_out) / trade_size_f;
     let price_b = u256_to_f64(dex_b_amount_out, decimals_out) / trade_size_f;
 
@@ -307,5 +311,3 @@ async fn get_opportunities(conn: web::Data<Arc<Mutex<Connection>>>) -> impl Resp
     let data: Vec<_> = rows.map(|r| r.unwrap()).collect();
     HttpResponse::Ok().json(data)
 }
-
-
